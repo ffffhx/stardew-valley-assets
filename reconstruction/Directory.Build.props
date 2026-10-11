@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>annotations</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <UseAppHost>false</UseAppHost>
+    <GamePath Condition="'$(GamePath)' == ''">$(STARDEW_GAME_PATH)</GamePath>
+  </PropertyGroup>
+  <Target Name="CheckGameDependencies" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(GamePath)/MonoGame.Framework.dll')" Text="Set GamePath or STARDEW_GAME_PATH to your Stardew Valley 1.6.15 directory containing MonoGame.Framework.dll." />
+  </Target>
+</Project>

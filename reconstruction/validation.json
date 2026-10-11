@@ -1,0 +1,82 @@
+{
+  "status": "passed",
+  "phase": "complete",
+  "started": "2026-10-11T15:34:57.996152Z",
+  "elapsedSeconds": 18.708814,
+  "checks": [
+    {
+      "name": "content_loaded",
+      "passed": true,
+      "detail": {
+        "objects": 807,
+        "graphics": "NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2"
+      }
+    },
+    {
+      "name": "all_object_context_tags",
+      "passed": true,
+      "detail": {
+        "count": 807
+      }
+    },
+    {
+      "name": "map_property_overload",
+      "passed": true,
+      "detail": {
+        "absent": false,
+        "empty": false,
+        "nonempty": true
+      }
+    },
+    {
+      "name": "item_traversal_edit_and_path",
+      "passed": true,
+      "detail": {
+        "visited": 2
+      }
+    },
+    {
+      "name": "new_farm_loaded",
+      "passed": true,
+      "detail": {
+        "locations": 80,
+        "day": 1,
+        "location": "FarmHouse"
+      }
+    },
+    {
+      "name": "parsnip_growth_four_watered_days",
+      "passed": true,
+      "detail": {
+        "harvest": "24",
+        "phase": 4
+      }
+    },
+    {
+      "name": "save_written",
+      "passed": true,
+      "detail": {
+        "folder": "Rebuilt_451409694"
+      }
+    },
+    {
+      "name": "save_load_roundtrip",
+      "passed": true,
+      "detail": {
+        "player": "Reconstruction",
+        "money": 12345,
+        "day": 1,
+        "wood": 37
+      }
+    },
+    {
+      "name": "farm_rendered",
+      "passed": true,
+      "detail": {
+        "Width": 1920,
+        "Height": 1080
+      }
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,39 @@
+{
+  "game_version": "1.6.15.24356",
+  "sdk": "8.0.425",
+  "target_framework": "net6.0",
+  "language_version": "12.0",
+  "platform_tested": "Windows x64",
+  "build": {
+    "result": "passed",
+    "errors": 0,
+    "warnings": 76
+  },
+  "raw_csharp_files": 1116,
+  "reconstructed_csharp_files": 1117,
+  "assemblies": {
+    "Stardew Valley.dll": {
+      "original_sha256": "7f1e5b8e58d2758b78570ba771bbeb03d33522f62188bf6c32edf0cf626deaee",
+      "rebuilt_sha256": "a68e4be13d2e604b97f26c32bed4e48c5540b6a3b972d5f6f48ca76eecb322e1",
+      "runtime_sha256": "a68e4be13d2e604b97f26c32bed4e48c5540b6a3b972d5f6f48ca76eecb322e1",
+      "rebuilt_bytes": 5489664
+    },
+    "StardewValley.GameData.dll": {
+      "original_sha256": "9c03497c2d2ac24c94e2f25b3c2fc39ecde1bc97341e514c5f9fdcc1e759cb81",
+      "rebuilt_sha256": "c4207650efc96a8eca04458607439eefd34dc3c9760a901134b5feafe3b07b19",
+      "runtime_sha256": "c4207650efc96a8eca04458607439eefd34dc3c9760a901134b5feafe3b07b19",
+      "rebuilt_bytes": 77312
+    }
+  },
+  "validation": "validation.json",
+  "runtime_capture": "validation.png",
+  "not_verified": [
+    "macOS build or runtime",
+    "Linux build or runtime",
+    "Internet multiplayer",
+    "All story/quest/festival branches",
+    "Long-term save compatibility",
+    "Method-by-method behavioral equivalence"
+  ],
+  "runtime_strategy": "Copy the same installed version into ignored runtime/, retain its Content, apphost, .deps.json, runtimeconfig and native libraries; replace only the two rebuilt managed assemblies and symbols."
+}

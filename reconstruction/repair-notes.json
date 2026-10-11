@@ -1,0 +1,86 @@
+{
+  "original_assembly_sha256": "7f1e5b8e58d2758b78570ba771bbeb03d33522f62188bf6c32edf0cf626deaee",
+  "method_recovery": "ILSpy 9.1.0.7988 with -lv CSharp6 to expose compiler-generated local-function bodies",
+  "repairs": [
+    {
+      "file": "Stardew Valley.csproj",
+      "reason": "Restore the transitive HashFunctionAsyncBase dependency."
+    },
+    {
+      "file": "StardewValley/InteriorDoor.cs",
+      "reason": "Select the original FrameworkExtensions.TryGetValue(..., out string) overload."
+    },
+    {
+      "file": "StardewValley/Pathfinding/PathFindController.cs",
+      "reason": "Select the original FrameworkExtensions.TryGetValue(..., out string) overload."
+    },
+    {
+      "file": "StardewValley/GameLocation.cs",
+      "reason": "Select the original FrameworkExtensions.TryGetValue(..., out string) overload."
+    },
+    {
+      "file": "StardewValley/GameLocation.cs",
+      "reason": "Select the original FrameworkExtensions.TryGetValue(..., out string) overload."
+    },
+    {
+      "file": "StardewValley/GameLocation.cs",
+      "reason": "Select the original FrameworkExtensions.TryGetValue(..., out string) overload."
+    },
+    {
+      "file": "StardewValley/Internal/ForEachItemHelper.cs",
+      "reason": "Restore the captured parameters of the GetPath local function in the static list iterator."
+    },
+    {
+      "file": "StardewValley/ItemContextTagManager.cs",
+      "reason": "Keep ObjectData in the enclosing scope used by the original shared IL branch."
+    },
+    {
+      "file": "StardewValley/ItemContextTagManager.cs",
+      "reason": "Use the recovered enclosing-scope ObjectData variable."
+    },
+    {
+      "file": "StardewValley/GameLocation.cs",
+      "reason": "Separate the object collision local from the TerrainFeature local used by the next callback."
+    },
+    {
+      "file": "StardewValley/GameLocation.cs",
+      "reason": "Recover the missing mastery helper from the original compiler-generated method using C# 6 decompilation."
+    },
+    {
+      "file": "StardewValley/Menus/CarpenterMenu.cs",
+      "reason": "Recover the complete demolition callback and its captured variables from the original assembly."
+    },
+    {
+      "file": "StardewValley/SaveMigrations/SaveMigrator_1_6.cs",
+      "reason": "Recover the preserve-item migration callback from the original assembly, retaining in-parameter semantics."
+    }
+  ],
+  "project_configuration": [
+    "Target net6.0 with .NET SDK 8 / C# 12",
+    "Reference installed game dependencies through GamePath / STARDEW_GAME_PATH",
+    "Reference reconstructed GameData project instead of its installed DLL",
+    "Remove redundant framework references and fixed Windows platform target"
+  ],
+  "namespace_repairs": [
+    "Add StardewValley.Objects for recovered CarpenterMenu Chest code",
+    "Add StardewValley.Internal for recovered SaveMigrator_1_6 callback context"
+  ],
+  "optional_validation_changes": [
+    "Program: opt-in STARDEW_RECONSTRUCTION_DATA_DIR for isolated saves/settings/logs",
+    "Program: register ReconstructionSmokeProbe only with --reconstruction-smoke-test",
+    "ReconstructionSmokeProbe: isolated single-player integration checks and framebuffer capture"
+  ],
+  "changed_source_files": [
+    "game/Stardew Valley.csproj",
+    "game/StardewValley/GameLocation.cs",
+    "game/StardewValley/InteriorDoor.cs",
+    "game/StardewValley/Internal/ForEachItemHelper.cs",
+    "game/StardewValley/ItemContextTagManager.cs",
+    "game/StardewValley/Menus/CarpenterMenu.cs",
+    "game/StardewValley/Pathfinding/PathFindController.cs",
+    "game/StardewValley/Program.cs",
+    "game/StardewValley/ReconstructionSmokeProbe.cs",
+    "game/StardewValley/SaveMigrations/SaveMigrator_1_6.cs",
+    "gamedata/StardewValley.GameData.csproj"
+  ]
+}

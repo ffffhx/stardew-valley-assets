@@ -1,0 +1,80 @@
+{
+  "version": "1.6.15.24356",
+  "topics": [
+    {
+      "id": "startup", "title": "启动与每帧循环", "group": "程序骨架",
+      "summary": "Program 创建 GameRunner；GameRunner 管理 Game1 实例，分别调用加载、更新和绘制。单机与本地分屏复用这套实例管理。",
+      "flow": ["Program.Main", "GameRunner.LoadContent", "Game1.Instance_LoadContent", "GameRunner.Update / Draw", "场景、角色、菜单"],
+      "details": ["Program.Main 设置区域文化与异常处理，然后进入 MonoGame 的 Run 循环。运行时内容根目录是 Content。", "GameRunner 在每个 Game1 实例前后调用 LoadInstance / SaveInstance，切换实例状态。把全部静态 Game1 状态理解成单一进程全局会漏掉分屏机制。", "Game1 的 gameMode 决定当前是标题、加载还是游玩状态；菜单、时间、地图与角色更新在游戏循环中协调。"],
+      "sources": [{"path":"StardewValley/Program.cs","line":69,"label":"程序入口"},{"path":"StardewValley/GameRunner.cs","line":240,"label":"加载与更新"},{"path":"StardewValley/GameRunner.cs","line":96,"label":"渲染与分屏"},{"path":"StardewValley/Game1.cs","line":3663,"label":"Game1.Update"}]
+    },
+    {
+      "id": "assets", "title": "素材如何连接游戏物品", "group": "素材与数据",
+      "summary": "物品 ID 通过 ItemRegistry 找到类型定义，再由 Data/Objects 的 Texture、SpriteIndex 映射到图集中的矩形。素材库中的 807 项物品索引就是这条关系的导出。",
+      "flow": ["(O)24 / 物品 ID", "ItemRegistry", "ObjectDataDefinition", "Texture + SpriteIndex", "ParsedItemData / 绘制"],
+      "details": ["ID 前缀表示物品类型，例如 (O) 是普通物品、(BC) 是大型工艺品；同一纯数字在不同类型下不能混用。ItemRegistry.Create 创建运行时 Item，GetData 读取显示与定义信息。", "普通物品的默认纹理是 Maps/springobjects，基础图块为 16×16。设图集宽度 W、序号 s，则列数为 W/16，x=(s%列数)×16，y=floor(s/列数)×16。其他类型使用各自的图块规则。", "DisplayName 与 Description 通过 TokenParser 解析本地化文本。动画、染色、工具与角色组合外观还受绘制代码控制；单个裁切图块不等于所有游戏状态下的最终外观。", "Content 中的原始 XNB 是游戏加载格式；assets 中的 PNG、JSON、TMX 是方便查看和编辑的解包格式。run.py 使用安装目录的原始 Content，未把解包结果冒充已重新打包的运行资源。"],
+      "sources": [{"path":"StardewValley/ItemRegistry.cs","line":320,"label":"查找与创建物品"},{"path":"StardewValley/ItemTypeDefinitions/ObjectDataDefinition.cs","line":40,"label":"默认纹理与 16×16 图块"},{"path":"StardewValley/ItemTypeDefinitions/ParsedItemData.cs","line":109,"label":"纹理与矩形缓存"},{"path":"StardewValley/ItemContextTagManager.cs","line":20,"label":"物品标签"}],
+      "assets": [{"path":"assets/Data/Objects.json","label":"物品数据"},{"path":"assets/Maps/springobjects.png","label":"物品图集"},{"path":"objects.csv","label":"中文名称与坐标表"}]
+    },
+    {
+      "id": "world", "title": "地图、碰撞与场景对象", "group": "程序骨架",
+      "summary": "GameLocation 把 xTile 地图、地图属性、NPC、地形、物品和建筑放在同一场景中。地图层提供底图，动态对象由游戏逻辑更新。",
+      "flow": ["Maps / xTile", "GameLocation", "terrainFeatures / objects / characters", "checkAction / 碰撞", "场景切换"],
+      "details": ["地图的图层和属性不仅决定画面，也参与传送、门、交互和通行判断。TMX 适合查看布局，实际运行仍加载原始内容。", "terrainFeatures 保存耕地、树木等格子级地形；objects 保存放置物；characters 保存 NPC 等角色。改变一个格子时要确认它属于哪个集合。", "GameLocation.checkAction 分派地点交互。DayUpdate 处理每日变化，具体场景子类再扩展特殊行为。", "本次修复了 PropertyCollection.TryGetValue 的重载选择：原始调用需要扩展方法的 out string，反编译产生的 out var 会错误选择另一种值类型。"],
+      "sources": [{"path":"StardewValley/GameLocation.cs","line":7660,"label":"地点交互入口"},{"path":"StardewValley/GameLocation.cs","line":5063,"label":"每日场景更新"},{"path":"StardewValley/Extensions/FrameworkExtensions.cs","line":1,"label":"地图属性扩展"},{"path":"StardewValley/Pathfinding/PathFindController.cs","line":1,"label":"寻路与阻挡"}],
+      "assets": [{"path":"assets/Maps/Farm.tmx","label":"标准农场地图"},{"path":"assets/Data/Locations.json","label":"场景数据"}]
+    },
+    {
+      "id": "time", "title": "时钟、睡觉与每日结算", "group": "玩法逻辑",
+      "summary": "游戏时钟按十分钟推进；睡觉后的新一天经过同步、日期更新和各场景每日处理。作物生长属于每日结算，而不是每帧增加。",
+      "flow": ["UpdateGameClock", "performTenMinuteClockUpdate", "NewDay / _newDayAfterFade", "场景 DayUpdate", "存档与清晨"],
+      "details": ["UpdateGameClock 将实际帧时间累积到游戏时间；菜单、事件、多人等状态影响时钟是否推进。十分钟更新会继续驱动 NPC 与场景的相关逻辑。", "_newDayAfterFade 是迭代式过程，包含多人同步屏障；不能简单替换成 dayOfMonth++，否则会漏掉天气、每日状态与场景结算。", "新角色跳过开场时，TitleMenu.createdNewCharacter 会加载初始世界、将玩家放到家中并通过正常 NewDay 流程进入春季第一天。自动验证使用的就是这条路径。"],
+      "sources": [{"path":"StardewValley/Game1.cs","line":6050,"label":"时钟累积"},{"path":"StardewValley/Game1.cs","line":5882,"label":"十分钟更新"},{"path":"StardewValley/Game1.cs","line":7777,"label":"新一天流程"},{"path":"StardewValley/Menus/TitleMenu.cs","line":1273,"label":"新角色进入世界"}]
+    },
+    {
+      "id": "crops", "title": "耕地、浇水与作物收获", "group": "玩法逻辑",
+      "summary": "HoeDirt 保存耕地与水分，Crop 保存生长阶段。Data/Crops 定义种子对应的收获物、阶段天数、季节与重复收获规则。",
+      "flow": ["种子 ID", "Data/Crops", "HoeDirt.dayUpdate", "Crop.newDay", "Crop.harvest"],
+      "details": ["Crop.newDay 首先处理室外季节和死亡状态。需要浇水的作物只有在传入状态为 1 时推进生长；无需浇水的作物走数据定义的例外分支。", "phaseDays 指定各阶段长度，currentPhase 和 dayOfCurrentPhase 记录进度；fullyGrown 与倒计时参与可重复收获作物的处理。成熟后还会检查巨型作物和对应的世界事件。", "收获逻辑决定产物、质量、数量和收获方式，并与玩家技能、耕地及 Junimo 工作者关联。验证用种子 472 连续执行四次已浇水日更新，确认产物 ID 24、阶段 4 且未枯死。"],
+      "sources": [{"path":"StardewValley/TerrainFeatures/HoeDirt.cs","line":923,"label":"耕地每日更新"},{"path":"StardewValley/Crop.cs","line":330,"label":"作物数据"},{"path":"StardewValley/Crop.cs","line":830,"label":"生长阶段"},{"path":"StardewValley/Crop.cs","line":482,"label":"收获逻辑"}],
+      "assets": [{"path":"assets/Data/Crops.json","label":"作物规则"},{"path":"assets/TileSheets/crops.png","label":"作物图集"}]
+    },
+    {
+      "id": "npc", "title": "NPC 日程、对话与好感", "group": "玩法逻辑",
+      "summary": "NPC 的形象、角色定义、日程和对话分开存储。代码按日期、时间、地点、事件和关系状态选择数据并执行行为。",
+      "flow": ["Data/Characters", "Characters/schedules", "NPC.parseMasterSchedule", "寻路与交互", "对话 / 礼物 / 关系"],
+      "details": ["人物头像与行走贴图是不同资源：Portraits 用于对话，Characters 用于场景中的动画。改一张图片不会自动改变另一张。", "parseMasterSchedule 解析日程文本并生成按时间排列的 SchedulePathDescription，再交给寻路与 NPC 更新推进。具体日期和条件决定选中哪条日程。", "checkAction 处理点击交互，checkForNewCurrentDialogue 参与选择对话。receiveGift 结合礼物偏好与关系状态改变好感并触发反馈。", "本地化对话在解包目录里保留语言后缀；研究文本时可以先用素材库的“中文与基础资源”筛选。"],
+      "sources": [{"path":"StardewValley/NPC.cs","line":5448,"label":"日程解析"},{"path":"StardewValley/NPC.cs","line":2464,"label":"交互分派"},{"path":"StardewValley/NPC.cs","line":3908,"label":"当前对话"},{"path":"StardewValley/NPC.cs","line":4898,"label":"送礼与好感"}],
+      "assets": [{"path":"assets/Portraits/Abigail.png","label":"Abigail 头像"},{"path":"assets/Characters/Abigail.png","label":"Abigail 动画图集"},{"path":"assets/Data/Characters.json","label":"角色定义"}]
+    },
+    {
+      "id": "craft", "title": "合成、机器与产物", "group": "玩法逻辑",
+      "summary": "手工合成由 CraftingRecipe 解析配方并扣除材料；加工机器通过 Object 处理投入物，再查询机器定义和输出规则。",
+      "flow": ["配方 / Data/Machines", "材料或输入物", "条件与输出规则", "ItemRegistry.Create", "库存或机器产物"],
+      "details": ["CraftingRecipe.createItem 决定生成哪个物品；consumeIngredients 从玩家及额外库存中扣除材料。判断能否合成与真正扣除材料是不同步骤。", "Object.performObjectDropInAction 的 probe 参数可只检查是否接受输入；研究机器时要区分试探调用和会消费输入的实际调用。", "1.6 的机器数据允许基于物品 ID、标签、条件与触发方式选择产物。ItemContextTagManager 为物品建立标签缓存，因此本次对 807 个物品都检查了修复后的 geode / not_giftable 标签。"],
+      "sources": [{"path":"StardewValley/CraftingRecipe.cs","line":202,"label":"创建合成物"},{"path":"StardewValley/CraftingRecipe.cs","line":273,"label":"扣除材料"},{"path":"StardewValley/Object.cs","line":2003,"label":"机器投入入口"},{"path":"StardewValley/ItemContextTagManager.cs","line":20,"label":"输入物标签"}],
+      "assets": [{"path":"assets/Data/Machines.json","label":"机器定义"},{"path":"assets/Data/CraftingRecipes.json","label":"合成配方"},{"path":"assets/TileSheets/Craftables.png","label":"大型工艺品图集"}]
+    },
+    {
+      "id": "saves", "title": "存档格式、读档与迁移", "group": "程序骨架",
+      "summary": "SaveGame 将角色、场景、团队和世界状态序列化到存档文件；加载时恢复对象关系并执行版本迁移。只保存玩家坐标远远不够重建游戏世界。",
+      "flow": ["SaveGame.Save", "getSaveEnumerator", "临时文件 / 正式文件", "getLoadEnumerator", "SaveMigrator / 场景恢复"],
+      "details": ["存档目录名使用过滤后的农场存档名加 uniqueIDForThisGame；目录内含同名主文件和 SaveGameInfo。写入先使用临时文件，再替换正式文件并保留旧副本。", "加载完成会恢复场景、NPC、装备与团队数据，执行 SaveMigrator.ApplySaveFixes，并做场景进入准备。迁移器的作用是适配旧版本格式，不是另存一种新游戏格式。", "1.6 迁移器中丢失的 HandleItem 回调已从原程序集的编译器生成方法恢复。物品遍历的 GetPath 捕获也已修复，验证覆盖读取路径、删除与替换项目。", "重建启动器设置 STARDEW_RECONSTRUCTION_DATA_DIR；Program 中新增的可选路径覆盖将测试保存、设置和日志导向独立目录。正常启动器使用 runtime-data；自动验证每次使用新的 test-data 子目录。"],
+      "sources": [{"path":"StardewValley/SaveGame.cs","line":280,"label":"保存入口"},{"path":"StardewValley/SaveGame.cs","line":346,"label":"序列化与临时文件"},{"path":"StardewValley/SaveGame.cs","line":691,"label":"加载流程"},{"path":"StardewValley/SaveMigrations/SaveMigrator_1_6.cs","line":49,"label":"1.6 迁移"},{"path":"StardewValley/Internal/ForEachItemHelper.cs","line":286,"label":"物品遍历回调"}]
+    },
+    {
+      "id": "network", "title": "多人同步与平台依赖", "group": "程序骨架",
+      "summary": "Netcode 字段承载可同步状态；Multiplayer 处理消息与实例关系；Steam / Galaxy 负责平台接入。这些代码已恢复，但本次只验证单机运行。",
+      "flow": ["NetFields / NetRef", "Multiplayer", "消息处理与同步", "SDKNetHelper", "Steam / Galaxy"],
+      "details": ["很多字段不是普通 int 或引用，而是 NetInt、NetString、NetRef 等类型。它们承担状态变更和网络序列化关系；脱离同步上下文直接改字段可能破坏主机与客户端一致性。", "Program 使用 SteamHelper；SteamHelper.Initialize 调用安装版的 Steamworks 和 Galaxy 库。重建没有替换平台 SDK 或移除其认证流程。", "本地分屏由 GameRunner 管理多个 Game1，与互联网多人并不相同。联机大厅、跨平台连线和长期存档兼容性没有在本次验证范围内。"],
+      "sources": [{"path":"StardewValley/Multiplayer.cs","line":1559,"label":"传入消息分派"},{"path":"StardewValley/SDKs/Steam/SteamHelper.cs","line":56,"label":"平台 SDK 初始化"},{"path":"StardewValley/GameRunner.cs","line":268,"label":"实例更新"},{"path":"Netcode/NetFields.cs","line":1,"label":"网络字段集合"}]
+    },
+    {
+      "id": "rebuild", "title": "重建过程与验证边界", "group": "重建说明",
+      "summary": "source 保留原始反编译结果；reconstruction/src 是可编译修复版本。它是从发行程序集恢复的代码，不是原作者的版本库、原始工程或完整开发资产。",
+      "flow": ["安装版 DLL", "REA 检查 / ILSpy 反编译", "恢复局部函数与类型", ".NET SDK 编译", "隔离副本运行验证"],
+      "details": ["REA 用于程序集检查；主游戏检查遇到工具的元数据表示容量上限，完整 C# 导出使用 ILSpy。该检查上限不等于有素材或 C# 文件被截断。", "恢复了三个反编译遗漏的局部函数：MasteryCave 技能显示、木匠拆除建筑回调、1.6 腌制品迁移回调。方法体来自同一原程序集的 C# 6 模式输出，随后恢复捕获变量与合法 C# 标识符。", "其他修复包括地图属性字符串重载、碰撞回调局部变量、物品标签分支作用域、遍历路径捕获、HashFunction.Core 引用与可移植依赖路径。changes.patch 和 repair-notes.json 记录变更。", "编译目标仍是 net6.0，使用 SDK 8 的 C# 12 编译器。启动时保留安装版的自包含 .NET 6、apphost、deps、原生库和 Content，只覆盖重建的两个 DLL 与调试符号。", "Windows 已实际构建和运行。macOS 的 apphost、.NET host、Steam/Galaxy、MonoGame 原生依赖及路径大小写不同；需要同版本 macOS 安装目录，不能复制 Windows runtime 来运行。源码引用已移除本机绝对路径，但 macOS 编译和运行未验证，启动器仅自动启动 Windows。", "验证通过表示明确列出的检查成功，不代表逐方法等价证明；没有声称恢复编辑器工程、历史提交、PSD 分层原稿、未发布内容，或验证所有节日、任务和联机分支。"],
+      "sources": [{"path":"StardewValley/ReconstructionSmokeProbe.cs","line":1,"label":"可复现的集成验证"},{"path":"StardewValley/Program.cs","line":69,"label":"隔离数据目录与可选探针"}]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Stardew Valley</AssemblyName>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="StardewValley.Icon.ico" />
+    <None Remove="StardewValley.Icon.bmp" />
+    <EmbeddedResource Include="StardewValley.Icon.ico" LogicalName="StardewValley.Icon.ico" />
+    <EmbeddedResource Include="StardewValley.Icon.bmp" LogicalName="StardewValley.Icon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(GamePath)/MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile">
+      <HintPath>$(GamePath)/xTile.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>$(GamePath)/SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Steamworks.NET">
+      <HintPath>$(GamePath)/Steamworks.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaxyCSharp">
+      <HintPath>$(GamePath)/GalaxyCSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>$(GamePath)/Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.Core"><HintPath>$(GamePath)/System.Data.HashFunction.Core.dll</HintPath></Reference>
+    <Reference Include="System.Data.HashFunction.Interfaces">
+      <HintPath>$(GamePath)/System.Data.HashFunction.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="BmFont">
+      <HintPath>$(GamePath)/BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="TextCopy">
+      <HintPath>$(GamePath)/TextCopy.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.xxHash">
+      <HintPath>$(GamePath)/System.Data.HashFunction.xxHash.dll</HintPath>
+    </Reference>
+    <ProjectReference Include="../gamedata/StardewValley.GameData.csproj" />
+  </ItemGroup>
+</Project>

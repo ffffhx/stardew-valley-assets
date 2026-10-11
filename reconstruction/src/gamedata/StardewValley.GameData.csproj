@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>StardewValley.GameData</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup>
+    </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(GamePath)/MonoGame.Framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
