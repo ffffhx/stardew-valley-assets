@@ -60,7 +60,7 @@
     "Open index.html directly for images and audio",
     "Run python serve.py for text and code previews; read the URL printed by the server"
   ],
-  "rights": "Original game content remains attributed to its respective copyright holders. This archive does not grant a redistribution license.",
+  "rights": "Original game content remains attributed to its respective copyright holders.",
   "reconstruction": {
     "guide": "reconstruction/guide.html",
     "build_info": "reconstruction/build-info.json",
