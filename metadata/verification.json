@@ -1,0 +1,46 @@
+{
+  "original_xnb_count": 3550,
+  "missing": [],
+  "preserved_unconverted_xnb": [
+    "Effects/ShadowRemove.xnb",
+    "Effects/ShadowRemoveMG3.8.0.xnb"
+  ],
+  "parse_errors": [],
+  "counts": {
+    ".png": 1044,
+    ".json": 2266,
+    ".mgfxo": 1,
+    ".xnb": 2,
+    ".fnt": 5,
+    ".tmx": 259,
+    ".xgs": 1,
+    ".xsb": 1,
+    ".xwb": 2,
+    ".wav": 463,
+    ".ico": 2,
+    ".manifest": 1,
+    ".cs": 1116,
+    ".csproj": 2,
+    ".bmp": 1
+  },
+  "asset_counts": {
+    ".png": 1044,
+    ".json": 2266,
+    ".mgfxo": 1,
+    ".xnb": 2,
+    ".fnt": 5,
+    ".tmx": 259,
+    ".xgs": 1,
+    ".xsb": 1,
+    ".xwb": 2
+  },
+  "total_bytes": 2502630334,
+  "code_build_tested": false,
+  "notes": [
+    "C# files are ILSpy reconstructions, not the original development repository.",
+    "REA main assembly inspection is partial due to its 64 MiB metadata representation limit.",
+    "The two Effect XNB files and compiled MGFX shader are preserved in original form.",
+    "Audio was decoded once without repeated loops; WAV smpl chunks preserve loop markers.",
+    "The 26 streams in the 1.4 bank have numeric filenames because the bank has no exposed stream names."
+  ]
+}

@@ -1,0 +1,17 @@
+# Publish only the archive and its viewer.
+/*
+!/.gitignore
+!/.gitattributes
+!/assets/
+!/audio/
+!/source/
+!/metadata/
+/metadata/*
+!/metadata/inventory.json
+!/metadata/verification.json
+!/archive.json
+!/catalog-data.js
+!/index.html
+!/inventory.csv
+!/objects.csv
+!/serve.py

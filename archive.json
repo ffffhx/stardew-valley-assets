@@ -1,0 +1,64 @@
+{
+    "game":  "Stardew Valley",
+    "game_version":  "1.6.15.24356",
+    "extraction_date":  "2026-10-11",
+    "tools":  {
+                  "Node":  "24.21.0",
+                  "REA":  "6.4.0",
+                  "ILSpyCmd":  "9.1.0.7988",
+                  "SMAPI_dependencies":  "4.5.2",
+                  "DotnetRuntime":  "8.0.31",
+                  "vgmstream":  "r2117",
+                  "StardewXnbHack":  "1.1.2 Windows"
+              },
+    "tool_sources":  [
+                         "https://github.com/morluto/rea",
+                         "https://github.com/Pathoschild/StardewXnbHack",
+                         "https://github.com/Pathoschild/SMAPI",
+                         "https://github.com/icsharpcode/ILSpy",
+                         "https://github.com/vgmstream/vgmstream"
+                     ],
+    "contents":  {
+                     "assets":  "Unpacked images, maps, data, fonts, and preserved binary resources",
+                     "source":  "ILSpy reconstructed C#; rebuilding was not tested",
+                     "viewer":  "index.html",
+                     "object_index":  "objects.csv",
+                     "verification":  "metadata/verification.json",
+                     "inventory":  "inventory.csv",
+                     "audio":  "463 decoded WAV streams"
+                 },
+    "counts":  {
+                   ".png":  1044,
+                   ".json":  2266,
+                   ".mgfxo":  1,
+                   ".xnb":  2,
+                   ".fnt":  5,
+                   ".tmx":  259,
+                   ".xgs":  1,
+                   ".xsb":  1,
+                   ".xwb":  2,
+                   ".wav":  463,
+                   ".ico":  2,
+                   ".manifest":  1,
+                   ".cs":  1116,
+                   ".csproj":  2,
+                   ".bmp":  1
+               },
+    "original_xnb_count":  3550,
+    "missing_xnb":  [
+
+                    ],
+    "preserved_unconverted_xnb":  [
+                                      "Effects/ShadowRemove.xnb",
+                                      "Effects/ShadowRemoveMG3.8.0.xnb"
+                                  ],
+    "restore":  [
+                    "git lfs install",
+                    "git lfs pull"
+                ],
+    "preview":  [
+                    "Open index.html directly for images and audio",
+                    "Run python serve.py for text and code previews; read the URL printed by the server"
+                ],
+    "rights":  "Original game content remains attributed to its respective copyright holders. This archive does not grant a redistribution license."
+}

@@ -1,0 +1,122 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Stardew Valley</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp6.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="StardewValley.Icon.ico" />
+    <None Remove="StardewValley.Icon.bmp" />
+    <EmbeddedResource Include="StardewValley.Icon.ico" LogicalName="StardewValley.Icon.ico" />
+    <EmbeddedResource Include="StardewValley.Icon.bmp" LogicalName="StardewValley.Icon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlSerializer">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Xml.XmlSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Concurrent">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Collections.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="xTile">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\xTile.dll</HintPath>
+    </Reference>
+    <Reference Include="StardewValley.GameData">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\StardewValley.GameData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Process">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Diagnostics.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Threading.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.Lightweight">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Reflection.Emit.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Reflection.Emit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.ILGeneration">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Reflection.Emit.ILGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Diagnostics.StackTrace.dll</HintPath>
+    </Reference>
+    <Reference Include="Steamworks.NET">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\Steamworks.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaxyCSharp">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\GalaxyCSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Net.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.Interfaces">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Data.HashFunction.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="BmFont">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\BmFont.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="TextCopy">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\TextCopy.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Primitives">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Reflection.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Net.NameResolution.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.xxHash">
+      <HintPath>..\..\..\..\Steam\steamapps\common\Stardew Valley\System.Data.HashFunction.xxHash.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
